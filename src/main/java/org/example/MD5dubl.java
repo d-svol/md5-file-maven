@@ -1,6 +1,6 @@
 package org.example;
 
-import java.io.File;
+import java.io.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +13,11 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -78,14 +82,14 @@ public class MD5dubl {
     public void printMd5DirTree() throws InterruptedException, IOException {
         List<String> files = getListFromPath();
         ExecutorService executorService = Executors.newFixedThreadPool(threadsAmount);
-        //sleep 2 day
         CountDownLatch latch = new CountDownLatch(files.size());
 
         for (String file : files) {
             executorService.execute(new Runnable() {
                 public void run() {
                     try {
-                        String out = "File directory: " + file + " ===>>>  " + getMd5(file);
+                        String hasCode = getMd5(file);
+                        String out = "File directory: " + file + " ===>>>  " + hasCode;
                         System.out.println(out);
                     } catch (NoSuchAlgorithmException | IOException e) {
                         throw new RuntimeException(e);
@@ -95,11 +99,47 @@ public class MD5dubl {
                 }
             });
         }
-        //list out
         latch.await();
         executorService.shutdownNow();
         System.out.println("Num files: " + files.size());
     }
+
+    public HashMap<String, String> getMd5Map() throws InterruptedException, IOException {
+        List<String> files = getListFromPath();
+        HashMap<String, String> hashMd5 = new HashMap<String, String>();
+        ExecutorService executorService = Executors.newFixedThreadPool(threadsAmount);
+        CountDownLatch latch = new CountDownLatch(files.size());
+
+        for (String file : files) {
+            executorService.execute(new Runnable() {
+                public void run() {
+                    try {
+                        String hasMd5Code = getMd5(file);
+                        hashMd5.put(file, hasMd5Code);
+                    } catch (NoSuchAlgorithmException | IOException e) {
+                        throw new RuntimeException(e);
+                    } finally {
+                        latch.countDown();
+                    }
+                }
+            });
+        }
+        latch.await();
+        executorService.shutdownNow();
+        return hashMd5;
+    }
+
+    public void printDuplicateValue() throws IOException, InterruptedException {
+        var map = getMd5Map();
+        Set<String> seen = new HashSet<>();
+        for (String key : map.keySet()) {
+            String value = map.get(key);
+            if (!seen.add(value)) {
+                System.out.println("Duplicate Name: " + key + " Duplicate has: " + value);
+            }
+        }
+    }
+
 
     private class Lock {
         private final Object internalLock = new Object();

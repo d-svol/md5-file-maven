@@ -8,7 +8,7 @@ public class Main {
         String fileDirectory = args[0];
         int treadsAmount = Integer.parseInt(args[1]);
         MD5dubl first = new MD5dubl(fileDirectory, treadsAmount);
-        first.printMd5DirTree();
+        first.printDuplicateValue();
         System.out.println("Done");
     }
 }
