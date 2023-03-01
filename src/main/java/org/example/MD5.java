@@ -13,8 +13,8 @@ import java.util.concurrent.Executors;
 import java.nio.file.attribute.*;
 
 public class MD5 {
-    private String directory;
-    private int threadsAmount;
+    private final String directory;
+    private final int threadsAmount;
 
     public MD5(String directory, int threadsAmount) {
         this.directory = directory;
@@ -59,7 +59,7 @@ public class MD5 {
     }
 
     public String getMd5(String file) throws NoSuchAlgorithmException, IOException {
-        int nRead = 0;
+        int nRead;
         byte[] buffer = new byte[1024 * 1024];
         MessageDigest md5 = MessageDigest.getInstance("MD5");
         try (InputStream in = new FileInputStream(file)) {
@@ -77,16 +77,14 @@ public class MD5 {
         CountDownLatch latch = new CountDownLatch(files.size());
 
         for (String file : files) {
-            executorService.execute(new Runnable() {
-                public void run() {
-                    try {
-                        String out = "File directory: " + file + " ===>>>  " + getMd5(file);
-                        System.out.println(out);
-                    } catch (NoSuchAlgorithmException | IOException e) {
-                        throw new RuntimeException(e);
-                    } finally {
-                        latch.countDown();
-                    }
+            executorService.execute(() -> {
+                try {
+                    String out = "File directory: " + file + " ===>>>  " + getMd5(file);
+                    System.out.println(out);
+                } catch (NoSuchAlgorithmException | IOException e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    latch.countDown();
                 }
             });
         }
@@ -96,7 +94,7 @@ public class MD5 {
         System.out.println("Num files: " + files.size());
     }
 
-    private class Lock {
+    private static class Lock {
         private final Object internalLock = new Object();
         private int total;
 

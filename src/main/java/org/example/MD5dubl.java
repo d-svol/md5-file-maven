@@ -13,20 +13,19 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MD5dubl {
-    private String directory;
-    private int threadsAmount;
+class MD5Duplicate {
+    private final String directory;
+    private final int threadsAmount;
 
-    public MD5dubl(String directory, int threadsAmount) {
+    public MD5Duplicate(String directory, int threadsAmount) {
         this.directory = directory;
         this.threadsAmount = threadsAmount;
     }
@@ -68,7 +67,7 @@ public class MD5dubl {
     }
 
     public String getMd5(String file) throws NoSuchAlgorithmException, IOException {
-        int nRead = 0;
+        int nRead;
         byte[] buffer = new byte[1024 * 1024];
         MessageDigest md5 = MessageDigest.getInstance("MD5");
         try (InputStream in = new FileInputStream(file)) {
@@ -81,12 +80,10 @@ public class MD5dubl {
 
     public void printMd5DirTree() throws InterruptedException, IOException {
         List<String> files = getListFromPath();
-        ExecutorService executorService = Executors.newFixedThreadPool(threadsAmount);
         CountDownLatch latch = new CountDownLatch(files.size());
-
-        for (String file : files) {
-            executorService.execute(new Runnable() {
-                public void run() {
+        try(ExecutorService executorService = Executors.newFixedThreadPool(threadsAmount)){
+            for (String file : files) {
+                executorService.execute(() -> {
                     try {
                         String hasCode = getMd5(file);
                         String out = "File directory: " + file + " ===>>>  " + hasCode;
@@ -96,26 +93,26 @@ public class MD5dubl {
                     } finally {
                         latch.countDown();
                     }
-                }
-            });
+                });
+            }
+            latch.await();
+            executorService.shutdownNow();
+            System.out.println("Num files: " + files.size());
         }
-        latch.await();
-        executorService.shutdownNow();
-        System.out.println("Num files: " + files.size());
     }
 
-    public HashMap<String, String> getMd5Map() throws InterruptedException, IOException {
+    public ConcurrentHashMap<String, String> getMd5Map() throws InterruptedException, IOException {
         List<String> files = getListFromPath();
-        HashMap<String, String> hashMd5 = new HashMap<String, String>();
-        ExecutorService executorService = Executors.newFixedThreadPool(threadsAmount);
+        ConcurrentHashMap<String, String> hashMd5 = new ConcurrentHashMap<>();
         CountDownLatch latch = new CountDownLatch(files.size());
+        ExecutorService executorService = Executors.newFixedThreadPool(threadsAmount);
 
         for (String file : files) {
             executorService.execute(new Runnable() {
                 public void run() {
                     try {
-                        String hasMd5Code = getMd5(file);
-                        hashMd5.put(file, hasMd5Code);
+                        String md5HasSum = getMd5(file);
+                        hashMd5.put(file, md5HasSum);
                     } catch (NoSuchAlgorithmException | IOException e) {
                         throw new RuntimeException(e);
                     } finally {
@@ -129,6 +126,7 @@ public class MD5dubl {
         return hashMd5;
     }
 
+
     public void printDuplicateValue() throws IOException, InterruptedException {
         var map = getMd5Map();
         Set<String> seen = new HashSet<>();
@@ -141,7 +139,7 @@ public class MD5dubl {
     }
 
 
-    private class Lock {
+    private static class Lock {
         private final Object internalLock = new Object();
         private int total;
 
