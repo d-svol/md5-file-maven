@@ -81,24 +81,24 @@ class MD5Duplicate {
     public void printMd5DirTree() throws InterruptedException, IOException {
         List<String> files = getListFromPath();
         CountDownLatch latch = new CountDownLatch(files.size());
-        try(ExecutorService executorService = Executors.newFixedThreadPool(threadsAmount)){
-            for (String file : files) {
-                executorService.execute(() -> {
-                    try {
-                        String hasCode = getMd5(file);
-                        String out = "File directory: " + file + " ===>>>  " + hasCode;
-                        System.out.println(out);
-                    } catch (NoSuchAlgorithmException | IOException e) {
-                        throw new RuntimeException(e);
-                    } finally {
-                        latch.countDown();
-                    }
-                });
-            }
-            latch.await();
-            executorService.shutdownNow();
-            System.out.println("Num files: " + files.size());
+        ExecutorService executorService = Executors.newFixedThreadPool(threadsAmount);
+        for (String file : files) {
+            executorService.execute(() -> {
+                try {
+                    String hasCode = getMd5(file);
+                    String out = "File directory: " + file + " ===>>>  " + hasCode;
+                    System.out.println(out);
+                } catch (NoSuchAlgorithmException | IOException e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    latch.countDown();
+                }
+            });
         }
+        latch.await();
+        executorService.shutdownNow();
+        System.out.println("Num files: " + files.size());
+
     }
 
     public ConcurrentHashMap<String, String> getMd5Map() throws InterruptedException, IOException {

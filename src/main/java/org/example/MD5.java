@@ -72,9 +72,9 @@ public class MD5 {
 
     public void printMd5DirTree() throws InterruptedException, IOException {
         List<String> files = getListFromPath();
+        CountDownLatch latch = new CountDownLatch(files.size());
         ExecutorService executorService = Executors.newFixedThreadPool(threadsAmount);
         //sleep 2 day
-        CountDownLatch latch = new CountDownLatch(files.size());
 
         for (String file : files) {
             executorService.execute(() -> {
