@@ -1,8 +1,14 @@
 package org.example;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.FileInputStream;
 import java.math.BigInteger;
-import java.nio.file.*;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -74,8 +80,6 @@ public class MD5 {
         List<String> files = getListFromPath();
         CountDownLatch latch = new CountDownLatch(files.size());
         ExecutorService executorService = Executors.newFixedThreadPool(threadsAmount);
-        //sleep 2 day
-
         for (String file : files) {
             executorService.execute(() -> {
                 try {
@@ -88,7 +92,6 @@ public class MD5 {
                 }
             });
         }
-        //list out
         latch.await();
         executorService.shutdownNow();
         System.out.println("Num files: " + files.size());

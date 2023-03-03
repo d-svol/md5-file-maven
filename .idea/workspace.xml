@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e88b4e14-a8ce-4359-bc9d-4f50af75823e" name="Changes" comment="upgrade getMd5Map()">
+    <list default="true" id="e88b4e14-a8ce-4359-bc9d-4f50af75823e" name="Changes" comment="del try-catch">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MD5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MD5.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MD5dubl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MD5dubl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,7 +47,6 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/deni/storage/denis/programming/Java/md5/md5-file-maven/src/main/java/org/example&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
@@ -134,7 +134,21 @@
       <option name="project" value="LOCAL" />
       <updated>1677522921832</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="upgrade getMd5Map()">
+      <created>1677696534207</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1677696534207</updated>
+    </task>
+    <task id="LOCAL-00005" summary="del try-catch">
+      <created>1677697256709</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1677697256709</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -148,7 +162,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master" />
+                        <option value="HEAD" />
                       </list>
                     </value>
                   </entry>
@@ -165,6 +179,7 @@
     <MESSAGE value="update" />
     <MESSAGE value="add method printDuplicateValue()" />
     <MESSAGE value="upgrade getMd5Map()" />
-    <option name="LAST_COMMIT_MESSAGE" value="upgrade getMd5Map()" />
+    <MESSAGE value="del try-catch" />
+    <option name="LAST_COMMIT_MESSAGE" value="del try-catch" />
   </component>
 </project>
