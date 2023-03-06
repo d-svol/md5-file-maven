@@ -4,10 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e88b4e14-a8ce-4359-bc9d-4f50af75823e" name="Changes" comment="del try-catch">
+    <list default="true" id="e88b4e14-a8ce-4359-bc9d-4f50af75823e" name="Changes" comment="upgrade method and name">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dsvol/FileDuplicatesFinder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dsvol/IFileDuplicatesFinder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dsvol/IoUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/dsvol/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MD5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MD5.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MD5dubl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MD5dubl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MD5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/dsvol/MD5.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MD5dubl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/net/dsvol/AppTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +156,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677697256709</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="upgrade method and name">
+      <created>1677880051359</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1677880051359</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -180,6 +195,7 @@
     <MESSAGE value="add method printDuplicateValue()" />
     <MESSAGE value="upgrade getMd5Map()" />
     <MESSAGE value="del try-catch" />
-    <option name="LAST_COMMIT_MESSAGE" value="del try-catch" />
+    <MESSAGE value="upgrade method and name" />
+    <option name="LAST_COMMIT_MESSAGE" value="upgrade method and name" />
   </component>
 </project>

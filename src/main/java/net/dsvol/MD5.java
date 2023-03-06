@@ -1,4 +1,4 @@
-package org.example;
+package net.dsvol;
 
 import java.io.File;
 import java.io.IOException;
@@ -95,36 +95,5 @@ public class MD5 {
         latch.await();
         executorService.shutdownNow();
         System.out.println("Num files: " + files.size());
-    }
-
-    private static class Lock {
-        private final Object internalLock = new Object();
-        private int total;
-
-        public Lock(int total) {
-            if (total < 0) {
-                throw new IllegalArgumentException("Total < 0");
-            }
-            this.total = total;
-        }
-
-        public void decrement() {
-            synchronized (internalLock) {
-                if (total > 0) {
-                    total--;
-                }
-                if (total == 0) {
-                    internalLock.notifyAll();
-                }
-            }
-        }
-
-        public void waitZero() throws InterruptedException {
-            synchronized (internalLock) {
-                while (total > 0) {
-                    internalLock.wait();
-                }
-            }
-        }
     }
 }
